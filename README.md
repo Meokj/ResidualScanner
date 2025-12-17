@@ -1,4 +1,6 @@
 # ResidualScanner
+* powershell管理员身份运行
 ```powershell
-.\ResidualScanner.ps1 -Days 90
+$Script = irm https://raw.githubusercontent.com/Meokj/ResidualScanner/main/ResidualScanner.ps1
+& ([ScriptBlock]::Create($Script)) -Days 180
 ```
