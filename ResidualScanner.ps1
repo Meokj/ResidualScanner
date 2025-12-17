@@ -3,7 +3,7 @@
 ResidualScanner - Scan for leftover software folders on C: drive
 .DESCRIPTION
 Scans common Windows directories for folders not modified in the last X days (default 180) and generates a report,
-excluding system directories and Windows components.
+excluding system directories, Windows components, and common cache/temp folders.
 .PARAMETER Days
 Number of days to consider a folder as unused (default: 180)
 #>
@@ -21,17 +21,19 @@ $scanPaths = @(
     "$env:TEMP"
 )
 
-# System folders to exclude
+# System folders and cache folders to exclude
 $excludePatterns = @(
     "Common Files",
     "Microsoft",
     "Windows",
-    "Internet Explorer",
     "WindowsApps",
     "Windows Mail",
     "ModifiableWindowsApps",
     "Microsoft Update Health Tools",
-    "Program Files (x86)\Microsoft.NET"
+    "Program Files (x86)\Microsoft.NET",
+    "Temp",
+    "Cache",
+    "LocalLow"
 )
 
 # Output file
@@ -45,10 +47,12 @@ Write-Output "Scanning for folders not modified in the last $Days days (excludin
 foreach ($path in $scanPaths) {
     if (Test-Path $path) {
         Write-Output "Scanning directory: $path ..."
-        # Find folders not modified in the last $Days days
+        
+        # Get folders older than $Days
         $folders = Get-ChildItem $path -Directory -ErrorAction SilentlyContinue | Where-Object {
             ($_.LastWriteTime -lt (Get-Date).AddDays(-$Days)) -and
-            (-not ($excludePatterns | ForEach-Object { $_ -and ($_.FullName -match [regex]::Escape($_)) }))
+            # Exclude system/cache folders
+            ($excludePatterns | ForEach-Object { $_ } | Where-Object { $_ -and ($_.FullName -like "*$_*") }).Count -eq 0
         }
 
         foreach ($folder in $folders) {
