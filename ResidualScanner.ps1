@@ -10,7 +10,6 @@ $scanPaths = @(
     "$env:TEMP"
 )
 
-# 排除系统文件夹和常见缓存
 $excludeFolders = @(
     "Common Files","Microsoft","Windows","WindowsApps","Windows Mail",
     "ModifiableWindowsApps","Microsoft.NET","Temp","Cache","LocalLow"
@@ -37,3 +36,4 @@ foreach ($path in $scanPaths) {
 }
 
 Write-Output "Scan complete! Results saved to $outputFile"
+
