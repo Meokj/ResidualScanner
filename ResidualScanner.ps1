@@ -1,6 +1,15 @@
-# Scan-CResiduals-EN.ps1
-# Function: Scan common software leftover folders on C: drive
-# All prompts in English to avoid encoding issues
+<#
+.SYNOPSIS
+ResidualScanner - Scan for leftover software folders on C: drive
+.DESCRIPTION
+Scans common Windows directories for folders not modified in the last X days (default 180) and generates a report.
+.PARAMETER Days
+Number of days to consider a folder as unused (default: 180)
+#>
+
+param(
+    [int]$Days = 180  # Default value if no parameter is provided
+)
 
 # Paths to scan
 $scanPaths = @(
@@ -15,15 +24,16 @@ $scanPaths = @(
 $outputFile = "C:\Residuals_Report.txt"
 
 # Write report header
-"Software leftover scan report - $(Get-Date)" | Out-File $outputFile -Encoding UTF8
+"Residual scan report - $(Get-Date)" | Out-File $outputFile -Encoding UTF8
 "`n===================================" | Out-File $outputFile -Append -Encoding UTF8
+Write-Output "Scanning for folders not modified in the last $Days days..."
 
 foreach ($path in $scanPaths) {
     if (Test-Path $path) {
         Write-Output "Scanning directory: $path ..."
-        # Find folders not modified in the last 180 days (possible leftovers)
+        # Find folders not modified in the last $Days days
         $folders = Get-ChildItem $path -Directory -ErrorAction SilentlyContinue | Where-Object {
-            ($_.LastWriteTime -lt (Get-Date).AddDays(-180))
+            ($_.LastWriteTime -lt (Get-Date).AddDays(-$Days))
         }
 
         foreach ($folder in $folders) {
