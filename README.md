@@ -11,7 +11,7 @@
 * 支持自定义未修改天数（默认 180 天）
 
 * 输出报告清晰，只显示可能需要手动清理的残留文件夹
-* 
+
 ```powershell
 $Script = irm https://raw.githubusercontent.com/Meokj/ResidualScanner/main/ResidualScanner.ps1
 & ([ScriptBlock]::Create($Script)) -Days 180
