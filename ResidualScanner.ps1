@@ -4,7 +4,7 @@ ResidualScanner - Scan for leftover software folders on C: drive
 .DESCRIPTION
 Scans common Windows directories for folders not modified in the last X days (default 180) 
 and generates a report, excluding system directories, driver/software support folders,
-and intelligently filters AppData caches. Checks registry for uninstalled software.
+and checks registry for uninstalled software accurately.
 .PARAMETER Days
 Number of days to consider a folder as unused (default: 180)
 #>
@@ -36,7 +36,7 @@ $excludeFolders = @(
     "Intel",
     "AMD",
     "Realtek",
-    "Microsoft.NET", 
+    "Microsoft.NET",
     "Windows Photo Viewer",
     "Npcap",
     "WinPcap",
@@ -56,6 +56,7 @@ function Test-IsResidual {
         [string]$FolderPath
     )
 
+    $folderName = [System.IO.Path]::GetFileName($FolderPath).ToLower()
     $uninstallPaths = @(
         "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall",
         "HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall",
@@ -67,8 +68,14 @@ function Test-IsResidual {
             Get-ChildItem $regPath | ForEach-Object {
                 $props = Get-ItemProperty $_.PSPath -ErrorAction SilentlyContinue
                 $installLocation = $props.InstallLocation
-                if ($installLocation -and ($FolderPath -like "$installLocation*")) {
-                    return $false  
+                $displayName = $props.DisplayName
+
+                if ($installLocation -and ($FolderPath.ToLower() -like ($installLocation.ToLower() + "*"))) {
+                    return $false
+                }
+
+                if ($displayName -and ($folderName -like ("*" + $displayName.ToLower() + "*"))) {
+                    return $false
                 }
             }
         }
@@ -80,7 +87,7 @@ function Test-IsResidual {
 # Write report header
 "Residual scan report - $(Get-Date)" | Out-File $outputFile -Encoding UTF8
 "`n===================================" | Out-File $outputFile -Append -Encoding UTF8
-Write-Output "Scanning for folders not modified in the last $Days days (excluding system/driver folders, AppData caches, and checking registry)..."
+Write-Output "Scanning for folders not modified in the last $Days days (excluding system/driver folders and checking registry)..."
 
 foreach ($path in $scanPaths) {
     if (Test-Path $path) {
