@@ -35,6 +35,8 @@ $excludeFolders = @(
     "Intel",
     "AMD",
     "Realtek",
+    "Microsoft.NET", 
+    "Windows Photo Viewer",
     "Npcap",
     "WinPcap",
     "Temp",
@@ -67,3 +69,4 @@ foreach ($path in $scanPaths) {
 
 Write-Output "Scan complete! Results saved to $outputFile"
 Write-Output "Please review the report and manually delete leftover folders if necessary."
+
