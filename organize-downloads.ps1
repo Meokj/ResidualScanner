@@ -8,8 +8,7 @@ param (
     [switch]$DryRun  # 加上 -DryRun 只预览不移动
 )
 
-$Home = [Environment]::GetFolderPath("UserProfile")
-$DownloadPath = Join-Path $Home "Downloads"
+$DownloadPath = Join-Path $HOME "Downloads"
 $LogFile = Join-Path $DownloadPath "organize.log"
 
 if (-not (Test-Path $DownloadPath)) {
