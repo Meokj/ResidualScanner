@@ -10,13 +10,16 @@
 * 6.年/月/类型三级目录
 * 7.日志记录
 * 8.错误不中断
+* 
 ## 执行
-1. 执行模式
+
+* 1. 执行模式
 ```powershell
 $Script = irm https://raw.githubusercontent.com/Meokj/ResidualScanner/main/organize-downloads.ps1
 & ([ScriptBlock]::Create($Script))
 ```
-2.预览模式
+
+* 2.预览模式
 ```powershell
 $Script = irm https://raw.githubusercontent.com/Meokj/ResidualScanner/main/organize-downloads.ps1
 $ScriptBlock = [ScriptBlock]::Create($Script)
