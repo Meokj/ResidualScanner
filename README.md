@@ -15,10 +15,9 @@
 
 * 执行模式
 ```powershell
-$Url = "https://raw.githubusercontent.com/Meokj/ResidualScanner/main/organize-downloads.ps1"
-$LocalPath = "$HOME/scripts/organize-downloads.ps1"
+$LocalPath = Join-Path $HOME "下载\organize-downloads.ps1" 
+# $LocalPath = Join-Path $HOME "Downloads/organize-downloads.ps1"
 irm $Url -OutFile $LocalPath
-pwsh $LocalPath -DryRun -Days 1000
 ```
 
 * 预览模式
