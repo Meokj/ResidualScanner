@@ -8,7 +8,11 @@ param (
     [switch]$DryRun  # 加上 -DryRun 只预览不移动
 )
 
-$DownloadPath = Join-Path $HOME "Downloads"
+if ($IsWindows) {
+    $DownloadPath = Join-Path $HOME "下载"
+} else {
+    $DownloadPath = Join-Path $HOME "Downloads"
+}
 $LogFile = Join-Path $DownloadPath "organize.log"
 
 if (-not (Test-Path $DownloadPath)) {
@@ -31,7 +35,7 @@ $ExcludeExtensions = @(".crdownload", ".part", ".tmp")
 
 # 获取需要整理的文件（最近7天）
 $Files = Get-ChildItem $DownloadPath -File |
-    Where-Object { $_.LastWriteTime -ge (Get-Date).AddDays(-7) } |
+    Where-Object { $_.LastWriteTime -ge (Get-Date).AddDays(-360) } |
     Where-Object { -not ($ExcludeExtensions -contains $_.Extension.ToLower()) }
 
 foreach ($File in $Files) {
