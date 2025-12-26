@@ -15,8 +15,12 @@
 
 * 执行模式
 ```powershell
-$Script = irm https://raw.githubusercontent.com/Meokj/ResidualScanner/main/organize-downloads.ps1
-& ([ScriptBlock]::Create($Script)) -Days 1000
+$Script = irm "https://raw.githubusercontent.com/Meokj/ResidualScanner/main/organize-downloads.ps1"
+$ScriptBlock = [ScriptBlock]::Create($Script)
+
+
+$ScriptBlock.Invoke(@{DryRun=$true; Days=1000})
+
 ```
 
 * 预览模式
