@@ -13,13 +13,13 @@
 * 
 ## 执行
 
-* 1. 执行模式
+* 执行模式
 ```powershell
 $Script = irm https://raw.githubusercontent.com/Meokj/ResidualScanner/main/organize-downloads.ps1
 & ([ScriptBlock]::Create($Script))
 ```
 
-* 2.预览模式
+* 预览模式
 ```powershell
 $Script = irm https://raw.githubusercontent.com/Meokj/ResidualScanner/main/organize-downloads.ps1
 $ScriptBlock = [ScriptBlock]::Create($Script)
