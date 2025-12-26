@@ -1,18 +1,28 @@
 # ResidualScanner
 
-* 自动排除系统目录（Windows、Microsoft、.NET、WindowsPowerShell 等）
+* 原文件名 + 下载时间
 
-* 排除驱动和核心工具目录（Intel、AMD、Realtek、Npcap、WinPcap 等）
+* 防止重复时间戳
 
-* 排除 AppData 的系统缓存、浏览器缓存、临时文件夹（LocalLow、Temp、Cache 等）
+* 分类整理（Images / Videos / Documents / Archives / Audio / Installers / Others）
 
-* 检查注册表，只有已卸载的软件文件夹才列为残留
+* 排除未完成下载文件（.crdownload / .part / .tmp）
 
-* 支持自定义未修改天数（默认 180 天）
+* Dry-run 预览模式
 
-* 输出报告清晰，只显示可能需要手动清理的残留文件夹
+* 年/月/类型三级目录
+
+* 日志记录
+
+* 错误不中断
 
 ```powershell
-$Script = irm https://raw.githubusercontent.com/Meokj/ResidualScanner/main/ResidualScanner.ps1
-& ([ScriptBlock]::Create($Script)) -Days 180
+$Script = irm https://raw.githubusercontent.com/Meokj/ResidualScanner/main/organize-downloads.ps1
+& ([ScriptBlock]::Create($Script))
+```
+
+```powershell
+$Script = irm https://raw.githubusercontent.com/Meokj/ResidualScanner/main/organize-downloads.ps1
+$ScriptBlock = [ScriptBlock]::Create($Script)
+& $ScriptBlock -DryRun
 ```
