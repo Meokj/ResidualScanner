@@ -15,11 +15,24 @@
 
 * 执行模式
 ```powershell
-$Script = irm "https://raw.githubusercontent.com/Meokj/ResidualScanner/main/organize-downloads.ps1"
-$ScriptBlock = [ScriptBlock]::Create($Script)
+$Url = "https://raw.githubusercontent.com/Meokj/ResidualScanner/main/organize-downloads.ps1"
 
+# 下载脚本内容到变量
+$ScriptText = irm $Url
 
-$ScriptBlock.Invoke(@{DryRun=$true; Days=1000})
+# 拼接参数（DryRun/Days）
+$ScriptWithParams = @"
+param(
+    [switch]`$DryRun = `$true,
+    [int]`$Days = 1000
+)
+$ScriptText
+"@
+
+# 创建 ScriptBlock 并执行
+$ScriptBlock = [ScriptBlock]::Create($ScriptWithParams)
+& $ScriptBlock
+
 
 ```
 
