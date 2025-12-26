@@ -17,7 +17,6 @@
 ```powershell
 $Script = irm https://raw.githubusercontent.com/Meokj/ResidualScanner/main/organize-downloads.ps1
 $ScriptBlock = [ScriptBlock]::Create($Script)
-& $ScriptBlock -DryRun
 ```
 
 * 预览模式
