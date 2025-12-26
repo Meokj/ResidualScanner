@@ -15,8 +15,26 @@
 
 * 执行模式
 ```powershell
-$LocalPath = Join-Path $HOME "下载\organize-downloads.ps1" 
-# $LocalPath = Join-Path $HOME "Downloads/organize-downloads.ps1"
+# 判断系统
+if ($IsWindows) {
+    # 中文 Windows
+    $DownloadDir = Join-Path $HOME "下载"
+} else {
+    $DownloadDir = Join-Path $HOME "Downloads"
+}
+
+# 脚本保存目录
+$ScriptDir = Join-Path $DownloadDir "scripts"
+
+# 创建目录
+if (-not (Test-Path $ScriptDir)) {
+    New-Item -ItemType Directory -Path $ScriptDir -Force | Out-Null
+}
+
+$LocalPath = Join-Path $ScriptDir "organize-downloads.ps1"
+
+# 下载脚本
+$Url = "https://raw.githubusercontent.com/Meokj/ResidualScanner/main/organize-downloads.ps1"
 irm $Url -OutFile $LocalPath
 ```
 
