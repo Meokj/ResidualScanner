@@ -16,24 +16,9 @@
 * 执行模式
 ```powershell
 $Url = "https://raw.githubusercontent.com/Meokj/ResidualScanner/main/organize-downloads.ps1"
-
-# 下载脚本内容到变量
-$ScriptText = irm $Url
-
-# 拼接参数（DryRun/Days）
-$ScriptWithParams = @"
-param(
-    [switch]`$DryRun = `$true,
-    [int]`$Days = 1000
-)
-$ScriptText
-"@
-
-# 创建 ScriptBlock 并执行
-$ScriptBlock = [ScriptBlock]::Create($ScriptWithParams)
-& $ScriptBlock
-
-
+$LocalPath = "$HOME/scripts/organize-downloads.ps1"
+irm $Url -OutFile $LocalPath
+pwsh $LocalPath -DryRun -Days 1000
 ```
 
 * 预览模式
