@@ -16,7 +16,7 @@
 * 执行模式
 ```powershell
 $Script = irm https://raw.githubusercontent.com/Meokj/ResidualScanner/main/organize-downloads.ps1
-& ([ScriptBlock]::Create($Script))
+& ([ScriptBlock]::Create($Script)) -Days 1000
 ```
 
 * 预览模式
