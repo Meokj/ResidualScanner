@@ -6,7 +6,6 @@
 
 param (
     [switch]$DryRun  # 加上 -DryRun 只预览不移动
-    [int]$Days = 1   
 )
 
 if ($IsWindows) {
@@ -36,7 +35,7 @@ $ExcludeExtensions = @(".crdownload", ".part", ".tmp")
 
 # 获取需要整理的文件（不传承默认1天）
 $Files = Get-ChildItem $DownloadPath -File |
-    Where-Object { $_.LastWriteTime -ge (Get-Date).AddDays(-($Days)) } |
+    Where-Object { $_.LastWriteTime -ge (Get-Date).AddDays(-300) } |
     Where-Object { -not ($ExcludeExtensions -contains $_.Extension.ToLower()) }
 
 foreach ($File in $Files) {
