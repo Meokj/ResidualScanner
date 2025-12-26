@@ -35,7 +35,7 @@ $ExcludeExtensions = @(".crdownload", ".part", ".tmp")
 
 # 获取需要整理的文件（不传承默认1天）
 $Files = Get-ChildItem $DownloadPath -File |
-    Where-Object { $_.LastWriteTime -ge (Get-Date).AddDays(-300) } |
+    Where-Object { $_.LastWriteTime -ge (Get-Date).AddDays(-1000) } |
     Where-Object { -not ($ExcludeExtensions -contains $_.Extension.ToLower()) }
 
 foreach ($File in $Files) {
