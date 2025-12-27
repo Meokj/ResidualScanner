@@ -37,6 +37,8 @@ $Categories = @{
 
 # 排除未完成下载文件
 $ExcludeExtensions = @(".crdownload", ".part", ".tmp")
+# 排除日志记录文件
+Where-Object { $_.Name -ne 'organize.log' }
 
 # 获取需要整理的文件
 $Files = Get-ChildItem $DownloadPath -File -Recurse |
