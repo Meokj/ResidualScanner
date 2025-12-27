@@ -146,7 +146,7 @@ foreach ($File in $Files) {
 # -------------------------------
 # 结束
 # -------------------------------
-Write-Output "下载文件整理完成。"
+Write-Output "下载文件整理完成，请在 organize.log 中查看整理记录"
 if ($DryRun) {
     Write-Output "当前为预览模式，未实际移动任何文件。"
 } else {
