@@ -68,7 +68,7 @@ $Files = Get-ChildItem $DownloadPath -File -Recurse |
     Where-Object {
         # 排除固定文件（日志）
         -not ($ExcludeFileNames -contains $_.Name)
-    } |
+    } 
 
 # -------------------------------
 # 开始整理
