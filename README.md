@@ -1,4 +1,4 @@
-# ResidualScanner
+# OrganizeDownloads
 
 <hr>
 
@@ -15,14 +15,14 @@
 
 * 执行模式
 ```powershell
-$Script = irm https://raw.githubusercontent.com/Meokj/ResidualScanner/main/organize-downloads.ps1
+$Script = irm https://raw.githubusercontent.com/Meokj/OrganizeDownloads/main/organize-downloads.ps1
 $ScriptBlock = [ScriptBlock]::Create($Script)
 & $ScriptBlock
 ```
 
 * 预览模式
 ```powershell
-$Script = irm https://raw.githubusercontent.com/Meokj/ResidualScanner/main/organize-downloads.ps1
+$Script = irm https://raw.githubusercontent.com/Meokj/OrganizeDownloads/main/organize-downloads.ps1
 $ScriptBlock = [ScriptBlock]::Create($Script)
 & $ScriptBlock -DryRun
 ```
