@@ -15,6 +15,11 @@ if ($IsWindows) {
 }
 $LogFile = Join-Path $DownloadPath "organize.log"
 
+# 初始化日志文件（非预览模式下覆盖旧日志）
+if (-not $DryRun) {
+    Set-Content $LogFile "$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss') 日志开始"
+}
+
 if (-not (Test-Path $DownloadPath)) {
     Write-Error "下载目录未找到: $DownloadPath"
     exit 1
